@@ -1,16 +1,10 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:task_master/Model/constants.dart';
+import 'package:task_master/utils/constants.dart';
 import 'package:task_master/ui/widgets/assigned_tasks_list.dart';
 
-
-class HomeScreen extends StatefulWidget {
-  @override
-  _HomeScreenState createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
+class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,14 +23,14 @@ class _HomeScreenState extends State<HomeScreen> {
           Expanded(
             flex: 3,
             child:
-                AssignedTasksList(),
+            AssignedTasksList(),
           ),
           Row(
 
             children: <Widget>[
               Tab(icon: Icon(Icons.account_box),)
             ],
-            ),
+          ),
         ],
       ),
     );
