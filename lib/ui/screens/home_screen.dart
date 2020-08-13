@@ -1,13 +1,18 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:task_master/bloc/counter_bloc.dart';
+import 'package:task_master/bloc/counter_event.dart';
 import 'package:task_master/utils/constants.dart';
 import 'package:task_master/ui/widgets/assigned_tasks_list.dart';
 
 
 class HomeScreen extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
+  CounterBloc cBloc = BlocProvider.of<CounterBloc>(context);
     return Scaffold(
       appBar: AppBar(centerTitle: true, title: Text(appTitle)),
       body: Column(
@@ -18,7 +23,24 @@ class HomeScreen extends StatelessWidget {
               decoration: BoxDecoration(
                   color: Theme.of(context).accentColor,
                   borderRadius: BorderRadius.only(bottomRight: Radius.circular(MediaQuery.of(context).size.height/10))),
-//              color: Theme.of(context).accentColor,
+
+
+              child: Row(
+
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  IconButton(icon: Icon(Icons.remove),onPressed: () => cBloc.add(CounterEvent.decrement),),
+
+                  BlocBuilder<CounterBloc, int>(
+                      builder:(context, state) {
+                        return Text("$state");
+                      },
+                  ),
+
+                  IconButton(icon: Icon(Icons.add), onPressed: () => cBloc.add(CounterEvent.increment),),
+                ],
+                
+              ),
             ),
           ),
           Expanded(

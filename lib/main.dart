@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:task_master/bloc/counter_bloc.dart';
 import 'ui/screens/home_screen.dart';
 import 'utils/app_theme.dart';
 
@@ -17,7 +19,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: appTheme(),
       debugShowCheckedModeBanner: false,
-      home: HomeScreen(
+      home: BlocProvider<CounterBloc>(
+        create: (context) => CounterBloc(0),
+        child: HomeScreen(),
       ),
 
     );
