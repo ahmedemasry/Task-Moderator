@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:task_master/controller/controller.dart';
+import 'package:task_master/model/client.dart';
 import 'package:task_master/model/task.dart';
+import 'package:task_master/model/user.dart';
 import 'package:task_master/ui/widgets/task_tile.dart';
 
 import 'task_card.dart';
@@ -15,25 +17,43 @@ class _AssignedTasksListState extends State<AssignedTasksList> {
   @override
   Widget build(BuildContext context) {
     Controller.setSomeInformation();
-    List<Task> fabulousTasks = Controller.getClientTasks(Controller.getClients()[0]);
-    return ListView.builder(
-      scrollDirection:Axis.horizontal,
-      itemCount: fabulousTasks.length,
-      itemBuilder: (context, index) {
-        return TaskCard.withTask(fabulousTasks[index], showUserName: true,);
 
-//        return Card(
-//          elevation: 2,
-//          child: ListTile(
-//            leading: Checkbox(value: true,),
-//            title: Text('Test Tile'),
-//            subtitle: Text('client: \ndetails should goes here, including deadline and other info.'),
-//          ),
-//        );
-
-
-
-      },
+    List<Client> client = Controller.getClients();
+    List<User> user = Controller.getUsers();
+    List<dynamic> tasks = Controller.getTasks();
+    return Column(
+      children: <Widget>[
+        Expanded(
+          flex: 2,
+          child: ListView.builder(
+              scrollDirection: MediaQuery.of(context).orientation==Orientation.portrait?Axis.horizontal:Axis.vertical,
+              itemCount: user.length,
+              itemBuilder: (context, index) {
+                return TaskCard.withUser(user[index]);
+              }
+          ),
+        ),
+        Expanded(
+          flex: 2,
+          child: ListView.builder(
+            scrollDirection: MediaQuery.of(context).orientation==Orientation.portrait?Axis.horizontal:Axis.vertical,
+            itemCount: client.length,
+            itemBuilder: (context, index) {
+              return TaskCard.withClient(client[index]);
+            },
+          ),
+        ),
+        Expanded(
+          flex: 3,
+          child: ListView.builder(
+//            scrollDirection: Axis.horizontal,
+            itemCount: tasks.length,
+            itemBuilder: (context, index) {
+              return TaskTile.withTask(tasks[index] ,showUserName: true);
+            },
+          ),
+        ),
+      ],
     );
   }
 }

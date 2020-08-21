@@ -35,16 +35,16 @@ class TaskCard extends StatelessWidget {
       : this(
       title: user.name,
       subtitle: user.subtitle,
-      remainingTasks: Controller.remainingTasksCount(user),
-      doneTasks: Controller.doneTasksCount(user),
+      remainingTasks: user.remainingTasksCount(),//Controller.remainingTasksCount(user),
+      doneTasks: user.doneTasksCount(),//Controller.doneTasksCount(user),
       object: user);
 
   TaskCard.withClient(Client client)
       : this(
       title: client.title,
       subtitle: client.packageString(),
-      remainingTasks: Controller.remainingTasksCount(client),
-      doneTasks: Controller.doneTasksCount(client),
+      remainingTasks: client.remainingTasksCount(),//Controller.remainingTasksCount(client),
+      doneTasks: client.doneTasksCount(),//Controller.doneTasksCount(client),
       object: client);
 
   Widget build(BuildContext context) {
@@ -91,7 +91,7 @@ class TaskCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               TextInsideTaskCard(
-                "$remainingTasks remaining",
+                "$remainingTasks remaining    ",
                 color: Colors.yellow,),
               TextInsideTaskCard("$doneTasks done", color: Colors.white),
             ],

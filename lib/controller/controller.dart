@@ -24,31 +24,32 @@ class Controller{
     yousef.addMember(ahmed);
     yousef.addMember(moustafa);
 
-    yousef.addTask(Task(title: "Fabulous Client", client: fabulous));
+    yousef.addTask(Task(title: "Fabulous Client", client: fabulous,deadline: DateTime.now().subtract(Duration(minutes: 5))));
     yousef.tasks[0].done = true;
-    yousef.addTask(Task(title: "Meeting with graphics team", client: genZ));
+    yousef.addTask(Task(title: "Meeting with graphics team", client: genZ, deadline: DateTime.now().add(Duration(days: 1))));
 
-    ahmed.addTask(Task(title: "Fabulous Video", client: fabulous));
-    ahmed.addTask(Task(title: "Ahmed Farouk Services Viedo", client: ahmedFarouk));
+    ahmed.addTask(Task(title: "Fabulous Video", client: fabulous, deadline: DateTime.now().add(Duration(hours: 3, minutes: 23))));
+    ahmed.addTask(Task(title: "Ahmed Farouk Services Viedo", client: ahmedFarouk, deadline: DateTime.now().add(Duration(hours: 4, minutes:46))));
+    ahmed.addTask(Task(title: "Gen-Z Production Services", client: genZ, deadline: DateTime.now().add(Duration(hours: 8, minutes:55))));
     ahmed.tasks[0].done = true;
     ahmed.tasks[1].done = true;
-    ahmed.addTask(Task(title: "Gen-Z Production Services", client: genZ));
-    ahmed.addTask(Task(title: "Gen-Z Software Services", client: genZ));
+    ahmed.tasks[2].done = true;
+    ahmed.addTask(Task(title: "Gen-Z Software Services", client: genZ, deadline: DateTime.now().add(Duration(hours: 3, minutes:4))));
 
     moustafa.addTask(Task(title: "fabulous Post 1", client: fabulous));
     moustafa.addTask(Task(title: "fabulous Post 2", client: fabulous));
     moustafa.addTask(Task(title: "Gen-Z Grid 1", client: genZ));
-    moustafa.addTask(Task(title: "ahmedFarouk Post 1", client: ahmedFarouk));
+    moustafa.addTask(Task(title: "ahmedFarouk Post 1", client: ahmedFarouk, deadline: DateTime.now().add(Duration(hours: 0, minutes:18))));
     moustafa.tasks[0].done = true;
     moustafa.tasks[1].done = true;
     moustafa.tasks[2].done = true;
     moustafa.tasks[3].done = true;
     moustafa.addTask(Task(title: "ahmedFarouk Post 2", client: ahmedFarouk));
-    moustafa.addTask(Task(title: "fabulous Post 3", client: fabulous));
-    moustafa.addTask(Task(title: "Gen-Z Grid 2", client: genZ));
-    moustafa.addTask(Task(title: "Gen-Z Grid 3", client: genZ));
-    moustafa.addTask(Task(title: "Gen-Z Grid 4", client: genZ));
-    moustafa.addTask(Task(title: "Gen-Z Grid 5", client: genZ));
+    moustafa.addTask(Task(title: "fabulous Post 3", client: fabulous, deadline: DateTime.now().add(Duration(days: 1, minutes:46))));
+    moustafa.addTask(Task(title: "Gen-Z Grid 2", client: genZ, deadline: DateTime.now().add(Duration(days: 3, hours:2))));
+    moustafa.addTask(Task(title: "Gen-Z Grid 3", client: genZ, deadline: DateTime.now().add(Duration(hours: 12,))));
+    moustafa.addTask(Task(title: "Gen-Z Grid 4", client: genZ, deadline: DateTime.parse("2022-08-16T11:00:00.000Z")));
+    moustafa.addTask(Task(title: "Gen-Z Grid 5", client: genZ, deadline: DateTime.now().add(Duration(hours: 12,))));
 
 
 
@@ -134,17 +135,12 @@ class Controller{
       return object.tasks.length;
     if(object is Client)
       return getClientTasks(object).length;
+    else if (object is List<Task>)
+      return object.length;
     return null;
   }
-  static int doneTasksCount(Object object){
+  static int doneTasksCount(List<Task> tasks){
     int count = 0;
-    List<Task> tasks;
-    if(object is User)
-      tasks =  object.tasks;
-    else if(object is Client)
-      tasks = getClientTasks(object);
-    else
-      return null;
     for(Task task in tasks)
     {
       if(task.done == true)
@@ -155,7 +151,7 @@ class Controller{
     return count;
   }
   static int remainingTasksCount(Object object){
-    if((object is User) || (object is Client))
+    if((object is User) || (object is Client) || (object is List<Task>))
       return tasksCount(object) - doneTasksCount(object);
     return null;
   }

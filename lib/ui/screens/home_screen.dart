@@ -28,12 +28,7 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
           Expanded(
-            flex: 1,
-            child:
-            AssignedTasksList(),
-          ),
-          Expanded(
-            flex: 1,
+            flex: 3,
             child:
             AssignedTasksList(),
           ),
