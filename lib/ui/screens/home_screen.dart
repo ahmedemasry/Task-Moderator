@@ -12,39 +12,28 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-  CounterBloc cBloc = BlocProvider.of<CounterBloc>(context);
     return Scaffold(
-      appBar: AppBar(centerTitle: true, title: Text(appTitle)),
-      body: Column(
+//      appBar: AppBar(centerTitle: true, title: Text(appTitle)),
+      body:
+      Column(
         children: <Widget>[
+
           Expanded(
             flex: 1,
             child: Container(
-              decoration: BoxDecoration(
-                  color: Theme.of(context).accentColor,
-                  borderRadius: BorderRadius.only(bottomRight: Radius.circular(MediaQuery.of(context).size.height/10))),
-
-
-              child: Row(
-
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  IconButton(icon: Icon(Icons.remove),onPressed: () => cBloc.add(CounterEvent.decrement),),
-
-                  BlocBuilder<CounterBloc, int>(
-                      builder:(context, state) {
-                        return Text("$state");
-                      },
-                  ),
-
-                  IconButton(icon: Icon(Icons.add), onPressed: () => cBloc.add(CounterEvent.increment),),
-                ],
-                
-              ),
+              color:  Theme.of(context).accentColor,
+//              decoration: BoxDecoration(
+//                  color: Theme.of(context).accentColor,
+//                  borderRadius: BorderRadius.only(bottomRight: Radius.circular(MediaQuery.of(context).size.height/10))),
             ),
           ),
           Expanded(
-            flex: 3,
+            flex: 1,
+            child:
+            AssignedTasksList(),
+          ),
+          Expanded(
+            flex: 1,
             child:
             AssignedTasksList(),
           ),

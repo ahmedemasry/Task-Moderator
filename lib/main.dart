@@ -4,13 +4,9 @@ import 'package:task_master/bloc/counter_bloc.dart';
 import 'ui/screens/home_screen.dart';
 import 'utils/app_theme.dart';
 
-
-
-
 void main() {
   runApp(MyApp());
 }
-
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -23,9 +19,6 @@ class MyApp extends StatelessWidget {
         create: (context) => CounterBloc(0),
         child: HomeScreen(),
       ),
-
     );
   }
-
-
 }

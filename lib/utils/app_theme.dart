@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-ThemeData appTheme()
-{
+ThemeData appTheme() {
   return ThemeData.light().copyWith(
-    accentColor: Colors.deepPurpleAccent
+    accentColor: Color(0xFF6EADFF),
+    scaffoldBackgroundColor: Color(0xFFE3FAF4),
   );
 }
 
