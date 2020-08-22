@@ -5,13 +5,9 @@ import 'package:task_master/model/user.dart';
 class Controller{
   static List<Client> _clients = new List<Client>();
   static List<User> _users = new List<User>();
-//  static Controller controllerSimulator;
 
   Controller(){
-//    if(controllerSimulator == null) {
-//      controllerSimulator = Controller();
-      setSomeInformation();
-//    }
+//    setSomeInformation();
   }
 
   static void setSomeInformation(){
@@ -51,9 +47,7 @@ class Controller{
     moustafa.addTask(Task(title: "Gen-Z Grid 4", client: genZ, deadline: DateTime.parse("2022-08-16T11:00:00.000Z")));
     moustafa.addTask(Task(title: "Gen-Z Grid 5", client: genZ, deadline: DateTime.now().add(Duration(hours: 12,))));
 
-
-
-
+    print("TASKS:  ${getClientTasks(fabulous)}");
 
     _users= [yousef, ahmed, moustafa];
 
@@ -139,8 +133,17 @@ class Controller{
       return object.length;
     return null;
   }
-  static int doneTasksCount(List<Task> tasks){
+  static int doneTasksCount(Object object){
     int count = 0;
+    List<Task> tasks;
+    if(object is User)
+      tasks =  object.tasks;
+    else if(object is Client)
+      tasks = getClientTasks(object);
+    else if(object is List<Task>)
+      tasks = object;
+    else
+      return null;
     for(Task task in tasks)
     {
       if(task.done == true)

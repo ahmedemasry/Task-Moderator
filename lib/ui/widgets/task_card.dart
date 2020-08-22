@@ -82,6 +82,10 @@ class TaskCard extends StatelessWidget {
           ],
         );
       }
+      if (object is Client)
+        return TextInsideTaskCard("no tasks yet!", color: Colors.yellowAccent,);
+      if(object is User)
+        return TextInsideTaskCard("new user!", color: Colors.yellowAccent,);
     } else {
       return Column(
         children: <Widget>[
@@ -92,20 +96,17 @@ class TaskCard extends StatelessWidget {
             children: <Widget>[
               TextInsideTaskCard(
                 "$remainingTasks remaining    ",
-                color: Colors.yellow,),
+                color: Colors.yellowAccent,),
               TextInsideTaskCard("$doneTasks done", color: Colors.white),
             ],
           ),
         ],
       );
     }
+    return Text("");
   }
 
 }
-
-
-
-
 
 
 

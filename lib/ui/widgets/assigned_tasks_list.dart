@@ -8,52 +8,32 @@ import 'package:task_master/ui/widgets/task_tile.dart';
 import 'task_card.dart';
 
 class AssignedTasksList extends StatefulWidget {
+  final List<Object> list;
+
+  const AssignedTasksList({Key key, @required this.list}) : super(key: key);
   @override
   _AssignedTasksListState createState() => _AssignedTasksListState();
 }
 
 class _AssignedTasksListState extends State<AssignedTasksList> {
+  _AssignedTasksListState();
 
   @override
   Widget build(BuildContext context) {
-    Controller.setSomeInformation();
-
-    List<Client> client = Controller.getClients();
-    List<User> user = Controller.getUsers();
-    List<dynamic> tasks = Controller.getTasks();
-    return Column(
-      children: <Widget>[
-        Expanded(
-          flex: 2,
-          child: ListView.builder(
-              scrollDirection: MediaQuery.of(context).orientation==Orientation.portrait?Axis.horizontal:Axis.vertical,
-              itemCount: user.length,
-              itemBuilder: (context, index) {
-                return TaskCard.withUser(user[index]);
-              }
-          ),
-        ),
-        Expanded(
-          flex: 2,
-          child: ListView.builder(
-            scrollDirection: MediaQuery.of(context).orientation==Orientation.portrait?Axis.horizontal:Axis.vertical,
-            itemCount: client.length,
-            itemBuilder: (context, index) {
-              return TaskCard.withClient(client[index]);
-            },
-          ),
-        ),
-        Expanded(
-          flex: 3,
-          child: ListView.builder(
-//            scrollDirection: Axis.horizontal,
-            itemCount: tasks.length,
-            itemBuilder: (context, index) {
-              return TaskTile.withTask(tasks[index] ,showUserName: true);
-            },
-          ),
-        ),
-      ],
-    );
+    return ListView.builder(
+        scrollDirection:
+            MediaQuery.of(context).orientation == Orientation.portrait && !(widget.list is List<Task>)
+                ? Axis.horizontal
+                : Axis.vertical,
+        itemCount: widget.list.length,
+        itemBuilder: (context, index) {
+          if(widget.list[index] is User)
+            return TaskCard.withUser(widget.list[index]);
+          if(widget.list[index] is Client)
+            return TaskCard.withClient(widget.list[index]);
+          if(widget.list[index] is Task)
+            return TaskTile.withTask(widget.list[index]);
+          return CircularProgressIndicator();
+        });
   }
 }
