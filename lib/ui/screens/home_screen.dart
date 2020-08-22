@@ -1,12 +1,9 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:task_master/bloc/counter_bloc.dart';
-import 'package:task_master/bloc/counter_event.dart';
+import 'package:random_color/random_color.dart';
 import 'package:task_master/controller/controller.dart';
-import 'package:task_master/utils/constants.dart';
-import 'package:task_master/ui/widgets/assigned_tasks_list.dart';
+import 'package:task_master/ui/widgets/list_cards.dart';
+import 'package:task_master/ui/widgets/list_tasks.dart';
+import 'package:task_master/ui/widgets/task_card.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -30,10 +27,16 @@ class HomeScreen extends StatelessWidget {
             flex: 5,
             child: MediaQuery.of(context).orientation == Orientation.landscape
                 ? Row(
-                    children: screenContent(),
+                    children: screenContent(false),
                   )
-                : Column(
-                    children: screenContent(),
+                : ListView(
+                    children: screenContent(true),
+//                        <Widget>[
+//                      ListCards(list: Controller.getUsers(),),
+//                      ListCards(list: Controller.getClients(),),
+//
+//
+//                    ],
                   ),
           ),
           Row(
@@ -48,26 +51,40 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  List<Widget> screenContent() {
-    return [
+  List<Widget> screenContent(bool isPortrait) {
+    List<Widget> list = ListTasks.tasksListsTiles(Controller.getTasks());
+    list.insert(0, sectionTitle("USERS", Colors.blue));
+    list.insert(1, ListCards(list: Controller.getUsers(),));
+    list.insert(2, sectionTitle("CLIENTS", Colors.blue));
+    list.insert(3, ListCards(list: Controller.getClients(),));
+    list.insert(4, sectionTitle("TASKS", Colors.blue));
+
+    List<Widget> expandedWidgets=[
       Expanded(
         flex: 2,
-        child: AssignedTasksList(
+        child: ListCards(
           list: Controller.getUsers(),
         ),
       ),
       Expanded(
         flex: 2,
-        child: AssignedTasksList(
+        child: ListCards(
           list: Controller.getClients(),
         ),
       ),
       Expanded(
         flex: 3,
-        child: AssignedTasksList(
-          list: Controller.getTasks(),
+        child: ListTasks(
+          Controller.getTasks(),
         ),
       ),
     ];
+    return isPortrait? list: expandedWidgets;
+  }
+
+  Widget sectionTitle(String title, MaterialColor color) {
+    return Padding(
+      padding:EdgeInsets.only(left: 10),
+        child: TextInsideTaskCard(title, color: color,size: 25,height: 2,textAlign: TextAlign.left,));
   }
 }

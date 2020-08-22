@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:task_master/controller/controller.dart';
 import 'package:task_master/model/client.dart';
 import 'package:task_master/model/task.dart';
@@ -50,21 +53,27 @@ class TaskCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(30),
-      child: Card(
-//        margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-        color: Colors.green,
-        child: Padding(
-          padding: const EdgeInsets.all(15),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              TextInsideTaskCard(title, color: Colors.white, size: TaskTitleSize, height: 2, textAlign: TextAlign.center),
-              TextInsideTaskCard(subtitle, color: Colors.white, textAlign: TextAlign.center,),
-              infoSection(),
-            ],
+      child: Stack(
+
+        children: <Widget>[
+          Card(
+            color: Color((Random().nextInt(0xFFFFFFFF)|0xFF0F0F0F) & 0xFFF000F0),
+            child: Padding(
+              padding: const EdgeInsets.all(15),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  TextInsideTaskCard(title, color: Colors.white, size: TaskTitleSize, height: 1, textAlign: TextAlign.center),
+                  TextInsideTaskCard(subtitle, color: Colors.white, textAlign: TextAlign.center,),
+                  infoSection(),
+                ],
+              ),
+            ),
           ),
-        ),
+          Positioned(bottom: Random().nextInt(40)*1.0,right: Random().nextInt(40)*1.0,child: CircleAvatar(backgroundColor: Color(0x2Fffffff), radius: Random().nextInt(30)+30.0,)),
+          Positioned(top: Random().nextInt(30)*1.0,left: Random().nextInt(40)*1.0,child: CircleAvatar(backgroundColor: Color(0x0F000000), radius: 40,)),
+        ],
       ),
     );
   }
