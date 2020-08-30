@@ -44,7 +44,7 @@ class TaskTile extends StatelessWidget {
 //        color: Colors.green,
       title: TextInsideTaskCard(
         title,
-        color: task.done ? Colors.green : Colors.blue,size: TaskTitleSize,
+        color: task.done ? Colors.green : getDeadlineColor(task.deadline) ,size: TaskTitleSize,
       ),
       //Text(title,style: TextStyle(color: task.done?Colors.green:Colors.blue),),
       leading: IconButton(padding: EdgeInsets.all(0),iconSize: iconsSize,icon: Icon(task.done?Icons.check_circle:Icons.radio_button_unchecked), color: (task.done)?Colors.green:Colors.blueGrey, onPressed: () {  },),
@@ -99,5 +99,22 @@ class TaskTile extends StatelessWidget {
     String m = deadline.month.toString();
     String h = "${deadline.hour}:${deadline.minute}";
     return "$d/$m$y, $hourMinForm";
+  }
+
+  Color getDeadlineColor(DateTime deadline) {
+    DateTime now = DateTime.now();
+    if(deadline == null) return Colors.blue;
+    if(deadline.isBefore(now)) return Colors.pink;
+    if(now.year == deadline.year && now.month == deadline.month){
+      if(now.day == deadline.day) {
+        if(deadline.hour - now.hour <= 1){
+          return Colors.deepOrange;
+        }
+        else if (deadline.hour - now.hour <= 4){
+          return Colors.orangeAccent;
+        }
+      }
+    }
+      return Colors.blue;
   }
 }

@@ -3,7 +3,7 @@ import 'package:task_master/model/user.dart';
 
 import 'client.dart';
 
-class Task {
+class Task implements Comparable<Task>{
   final String _title;
   DateTime _deadline;
   final Client _client;
@@ -34,6 +34,16 @@ class Task {
   User get user => _user;
   set user(User value) {
     _user = value;
+  }
+
+  @override
+  int compareTo(Task other) {
+    // TODO: implement compareTo
+    if(this.deadline == null) return 1;
+    if(other.deadline == null) return -1;
+    if(this.deadline.isAfter(other.deadline)) return 1;
+    if(this.deadline.isBefore(other.deadline)) return -1;
+    return 0;
   }
 
 

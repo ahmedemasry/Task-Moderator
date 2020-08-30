@@ -9,12 +9,14 @@ class ListTasks extends StatefulWidget {
   final List<Task> tasks;
   final bool showUserName;
 
+
   const ListTasks(this.tasks, {Key key, this.showUserName}) : super(key: key);
 
-  static List<Widget> tasksListsTiles(List<Task> tasks, {bool showUserName}){
+  static List<Widget> tasksListsTiles(List<Task> tasks, {bool showUserName, bool doneTasksOnly}){
     List<Widget> tiles = List<Widget>();
     for(Task task in tasks){
-      tiles.add(TaskTile.withTask(task, showUserName: showUserName??false));
+      if(doneTasksOnly==null || task.done == doneTasksOnly)
+        tiles.add(TaskTile.withTask(task, showUserName: showUserName??false));
     }
     return tiles;
   }

@@ -52,7 +52,11 @@ class HomeScreen extends StatelessWidget {
   }
 
   List<Widget> screenContent(bool isPortrait) {
-    List<Widget> list = ListTasks.tasksListsTiles(Controller.getTasks());
+    List<Widget> list = ListTasks.tasksListsTiles(Controller.getTasks(), doneTasksOnly: false);
+    if(list.isNotEmpty) list.insert(0, subsSectionTitle("Remaining", Colors.blue));
+    List<Widget> donelist = (ListTasks.tasksListsTiles(Controller.getTasks(), doneTasksOnly: true));
+    if(donelist.isNotEmpty) donelist.insert(0, subsSectionTitle("Done", Colors.green));
+    list = list + donelist;
     list.insert(0, sectionTitle("USERS", Colors.blue));
     list.insert(1, ListCards(list: Controller.getUsers(),));
     list.insert(2, sectionTitle("CLIENTS", Colors.blue));
@@ -86,5 +90,10 @@ class HomeScreen extends StatelessWidget {
     return Padding(
       padding:EdgeInsets.only(left: 10),
         child: TextInsideTaskCard(title, color: color,size: 25,height: 2,textAlign: TextAlign.left,));
+  }
+  Widget subsSectionTitle(String title, MaterialColor color) {
+    return Padding(
+        padding:EdgeInsets.only(left: 10),
+        child: TextInsideTaskCard(title, color: color,size: 20,height: 2,textAlign: TextAlign.center,));
   }
 }

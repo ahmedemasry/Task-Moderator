@@ -46,6 +46,7 @@ class Controller{
     moustafa.addTask(Task(title: "Gen-Z Grid 3", client: genZ, deadline: DateTime.now().add(Duration(hours: 12,))));
     moustafa.addTask(Task(title: "Gen-Z Grid 4", client: genZ, deadline: DateTime.parse("2022-08-16T11:00:00.000Z")));
     moustafa.addTask(Task(title: "Gen-Z Grid 5", client: genZ, deadline: DateTime.now().add(Duration(hours: 12,))));
+//    moustafa.tasks.sort();
 
     print("TASKS:  ${getClientTasks(fabulous)}");
 
@@ -61,6 +62,7 @@ class Controller{
         _tasks.add(task);
       }
     }
+    _tasks.sort();
     return _tasks;
   }
   static Map<User, List<Task>> getUserTasksMap(){
