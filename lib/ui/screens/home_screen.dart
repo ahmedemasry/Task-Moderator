@@ -11,36 +11,84 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Controller.setSomeInformation();
 
-    return Scaffold(
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
 //      appBar: AppBar(centerTitle: true, title: Text(appTitle)),
-      body: Column(
-        children: <Widget>[
-          Expanded(
-            flex: 1,
-            child: Container(
-              color: Theme.of(context).accentColor,
-//              decoration: BoxDecoration(
-//                  color: Theme.of(context).accentColor,
-//                  borderRadius: BorderRadius.only(bottomRight: Radius.circular(MediaQuery.of(context).size.height/10))),
-            ),
+      bottomNavigationBar: TabBar(
+          labelColor: Colors.blue,
+          unselectedLabelColor: Colors.blueGrey,
+          labelPadding: EdgeInsets.all(8),
+          tabs: <Widget>[
+        Icon(Icons.home),
+        Icon(Icons.description),
+      ]),
+        body:TabBarView(
+          children: <Widget>[
+          Column(
+            children: <Widget>[
+              Expanded(
+                flex: 1,
+                child: Container(
+                  color: Theme.of(context).accentColor,
+                ),
+              ),
+              Expanded(
+                flex: 5,
+                child: MediaQuery.of(context).orientation == Orientation.landscape
+                    ? Row(
+                  children: screenContent(false),
+                )
+                    : ListView(
+                  children: screenContent(true),
+                ),
+              ),
+            ],
           ),
-          Expanded(
-            flex: 5,
-            child: MediaQuery.of(context).orientation == Orientation.landscape
-                ? Row(
-                    children: screenContent(false),
-                  )
-                : ListView(
-                    children: screenContent(true),
-//                        <Widget>[
-//                      ListCards(list: Controller.getUsers(),),
-//                      ListCards(list: Controller.getClients(),),
-//
-//
-//                    ],
+
+            Column(
+              children: <Widget>[
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    color: Theme.of(context).accentColor,
                   ),
-          ),
-        ],
+                ),
+                Expanded(
+                  flex: 5,
+                  child: ListView(
+                    children: <Widget>[
+                      SectionTitle("TASKS", Colors.blue, icon: Icons.description,)
+                      ]+ListTasks.tasksListView(Controller.getTasks())
+                  )
+                ),
+              ],
+            ),
+        ],),
+
+
+//      Column(
+//        children: <Widget>[
+//          Expanded(
+//            flex: 1,
+//            child: Container(
+//              color: Theme.of(context).accentColor,
+//            ),
+//          ),
+//          Expanded(
+//            flex: 5,
+//            child: MediaQuery.of(context).orientation == Orientation.landscape
+//                ? Row(
+//                    children: screenContent(false),
+//                  )
+//                : ListView(
+//                    children: screenContent(true),
+//                  ),
+//          ),
+//        ],
+//      ),
+
+
       ),
     );
   }

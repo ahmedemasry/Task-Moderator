@@ -28,8 +28,8 @@ class SectionTitle extends StatelessWidget {
         child: Row(
 //          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            icon==null?Text(""):Icon(icon,color: color,size: 30,),
-            TextInsideTaskCard(title, color: color,size: 25,height: 1,textAlign: TextAlign.center,),
+            icon==null?Text(""):Icon(icon,color: color,size: iconsSize,),
+            TextInsideTaskCard(title, color: color,size: SectionSize,height: 1,textAlign: TextAlign.center,),
           ],
         ));
   }
@@ -44,7 +44,7 @@ class SubSectionTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
         padding:EdgeInsets.only(left: 15),
-        child: TextInsideTaskCard(title, color: color,size: 20,height: 2,textAlign: TextAlign.left,));
+        child: TextInsideTaskCard(title, color: color,size: SubsectionSize,height: 2,textAlign: TextAlign.left,));
   }
 }
 
