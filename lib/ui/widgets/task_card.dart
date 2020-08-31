@@ -7,6 +7,7 @@ import 'package:task_master/controller/controller.dart';
 import 'package:task_master/model/client.dart';
 import 'package:task_master/model/task.dart';
 import 'package:task_master/model/user.dart';
+import 'package:task_master/ui/widgets/text_widgets.dart';
 import 'package:task_master/utils/constants.dart';
 
 class TaskCard extends StatelessWidget {
@@ -121,24 +122,5 @@ class TaskCard extends StatelessWidget {
 
 
 
-class TextInsideTaskCard extends StatelessWidget {
-  final String text;
-  final Color color;
-  final double size;
-  final double height;
-  final TextAlign textAlign;
 
-  TextInsideTaskCard(this.text,
-      {this.color = Colors.white, this.size = TaskSubtitleSize,
-        this.height = 1, this.textAlign = TextAlign.left});
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      text,
-      textAlign: textAlign,
-      style: TextStyle(color: color, fontSize: size, height: height),
-    );
-  }
-}
 

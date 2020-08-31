@@ -8,6 +8,7 @@ import 'package:task_master/model/user.dart';
 import 'package:task_master/utils/constants.dart';
 
 import 'task_card.dart';
+import 'text_widgets.dart';
 
 class TaskTile extends StatelessWidget {
   final String title;
@@ -33,7 +34,7 @@ class TaskTile extends StatelessWidget {
   TaskTile.withTask(Task task, {showUserName})
       : this(
             title: task.title,
-            description: task.description ?? "",
+            description: task.description ?? "Lorem Ipsum is simply dummy text of the printing text.",
             client: task.client.title,
             task: task,
             showUserName: showUserName ?? false);
@@ -54,7 +55,7 @@ class TaskTile extends StatelessWidget {
         children: <Widget>[
           TextInsideTaskCard("${showUserName?"${task.user.name} | ":""}${dateFormat(task.deadline)}", color: Color(0xFF364E68),height: 1.5,),
           SizedBox(height: 5,),
-          TextInsideTaskCard("${description}Lorem Ipsum is simply dummy text of the printing text.", color: Colors.blueGrey,),
+          TextInsideTaskCard("${description.length<50?description:"${description.substring(0,45)}..."}", color: Colors.blueGrey,),
           Divider(),
         ],
       ),
@@ -98,6 +99,8 @@ class TaskTile extends StatelessWidget {
     String d = deadline.day.toString();
     String m = deadline.month.toString();
     String h = "${deadline.hour}:${deadline.minute}";
+    if(now.isAfter(deadline) && !task.done)
+      return "$d/$m$y, $hourMinForm PASSED !";
     return "$d/$m$y, $hourMinForm";
   }
 
@@ -107,7 +110,7 @@ class TaskTile extends StatelessWidget {
     if(deadline.isBefore(now)) return Colors.pink;
     if(now.year == deadline.year && now.month == deadline.month){
       if(now.day == deadline.day) {
-        if(deadline.hour - now.hour <= 1){
+        if(deadline.hour - now.hour < 1){
           return Colors.deepOrange;
         }
         else if (deadline.hour - now.hour <= 4){

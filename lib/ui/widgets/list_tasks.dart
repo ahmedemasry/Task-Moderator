@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:task_master/controller/controller.dart';
 import 'package:task_master/model/task.dart';
 
 import 'task_tile.dart';
+import 'text_widgets.dart';
 
 
 
@@ -19,6 +21,20 @@ class ListTasks extends StatefulWidget {
         tiles.add(TaskTile.withTask(task, showUserName: showUserName??false));
     }
     return tiles;
+  }
+
+  static List<Widget> tasksListView(List<Task> tasks, {bool showUserName}){
+    List<Widget> remainingList = List<Widget>();
+    List<Widget> doneList = List<Widget>();
+    for(Task task in tasks){
+      if(task.done)
+        doneList.add(TaskTile.withTask(task, showUserName: showUserName??false));
+      else
+        remainingList.add(TaskTile.withTask(task, showUserName: showUserName??false));
+    }
+    if(remainingList.isNotEmpty) remainingList.insert(0, SubSectionTitle("Remaining", Colors.blueGrey));
+    if(doneList.isNotEmpty) doneList.insert(0, SubSectionTitle("Done", Colors.lightGreen));
+    return remainingList + doneList;
   }
 
 
