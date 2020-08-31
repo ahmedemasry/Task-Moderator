@@ -23,31 +23,27 @@ class Controller{
     yousef.addTask(Task(title: "Fabulous Client", client: fabulous,deadline: DateTime.now().subtract(Duration(minutes: 5))));
     yousef.addTask(Task(title: "AhmedFarouk Client", client: ahmedFarouk,deadline: DateTime.now().subtract(Duration(minutes: 5))));
     yousef.addTask(Task(title: "AhmedFarouk Client", client: ahmedFarouk,deadline: DateTime.now().add(Duration(minutes: 54))));
-    yousef.tasks[1].done = true;
     yousef.addTask(Task(title: "Meeting with graphics team", client: genZ, deadline: DateTime.now().add(Duration(days: 1))));
+    yousef.tasks[1].done = true;
 
     ahmed.addTask(Task(title: "Fabulous Video", client: fabulous, deadline: DateTime.now().add(Duration(hours: 3, minutes: 23))));
     ahmed.addTask(Task(title: "Ahmed Farouk Services Viedo", client: ahmedFarouk, deadline: DateTime.now().add(Duration(hours: 4, minutes:46))));
     ahmed.addTask(Task(title: "Gen-Z Production Services", client: genZ, deadline: DateTime.now().add(Duration(hours: 8, minutes:55))));
-//    ahmed.tasks[0].done = true;
-//    ahmed.tasks[1].done = true;
-    ahmed.tasks[2].done = true;
     ahmed.addTask(Task(title: "Gen-Z Software Services", client: genZ, deadline: DateTime.now().add(Duration(hours: 3, minutes:4))));
-    moustafa.addTask(Task(title: "fabulous Post 1", client: fabulous));
-    moustafa.addTask(Task(title: "fabulous Post 2", client: fabulous));
-    moustafa.addTask(Task(title: "Gen-Z Grid 1", client: genZ));
-    moustafa.addTask(Task(title: "ahmedFarouk Post 1", client: ahmedFarouk, deadline: DateTime.now().add(Duration(hours: 0, minutes:18))));
+    ahmed.tasks[0].done = true;
+    ahmed.tasks[1].done = true;
+    ahmed.tasks[2].done = true;
+//    moustafa.addTask(Task(title: "fabulous Post 1", client: fabulous));
+//    moustafa.addTask(Task(title: "fabulous Post 2", client: fabulous));
+//    moustafa.addTask(Task(title: "Gen-Z Grid 1", client: genZ));
+//    moustafa.addTask(Task(title: "ahmedFarouk Post 1", client: ahmedFarouk, deadline: DateTime.now().add(Duration(hours: 0, minutes:18))));
+    moustafa.addTask(Task(title: "ahmedFarouk Post 2", client: ahmedFarouk));
+    moustafa.addTask(Task(title: "fabulous Post 3", client: fabulous, deadline: DateTime.now().add(Duration(days: 1, minutes:46))));
+    moustafa.addTask(Task(title: "Gen-Z Grid 2", client: genZ, deadline: DateTime.now().add(Duration(days: 3, hours:2))));
     moustafa.tasks[0].done = true;
     moustafa.tasks[1].done = true;
     moustafa.tasks[2].done = true;
 //    moustafa.tasks[3].done = true;
-    moustafa.addTask(Task(title: "ahmedFarouk Post 2", client: ahmedFarouk));
-    moustafa.addTask(Task(title: "fabulous Post 3", client: fabulous, deadline: DateTime.now().add(Duration(days: 1, minutes:46))));
-    moustafa.addTask(Task(title: "Gen-Z Grid 2", client: genZ, deadline: DateTime.now().add(Duration(days: 3, hours:2))));
-    moustafa.addTask(Task(title: "Gen-Z Grid 3", client: genZ, deadline: DateTime.now().add(Duration(hours: 12,))));
-    moustafa.addTask(Task(title: "Gen-Z Grid 4", client: genZ, deadline: DateTime.parse("2022-08-16T11:00:00.000Z")));
-    moustafa.addTask(Task(title: "Gen-Z Grid 5", client: genZ, deadline: DateTime.now().add(Duration(hours: 12,))));
-//    moustafa.tasks.sort();
 
     print("TASKS:  ${getClientTasks(fabulous)}");
 

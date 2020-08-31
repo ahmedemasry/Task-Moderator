@@ -32,8 +32,8 @@ class ListTasks extends StatefulWidget {
       else
         remainingList.add(TaskTile.withTask(task, showUserName: showUserName??false));
     }
-    if(remainingList.isNotEmpty) remainingList.insert(0, SubSectionTitle("Remaining", Colors.blueGrey));
-    if(doneList.isNotEmpty) doneList.insert(0, SubSectionTitle("Done", Colors.lightGreen));
+    if(remainingList.isNotEmpty) remainingList.insert(0, SubSectionTitle("ONGOING TASKS", Colors.lightBlue));
+    if(doneList.isNotEmpty) doneList.insert(0, SubSectionTitle("DONE TASKS", Colors.green));
     return remainingList + doneList;
   }
 

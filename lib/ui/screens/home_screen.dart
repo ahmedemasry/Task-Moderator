@@ -12,17 +12,24 @@ class HomeScreen extends StatelessWidget {
     Controller.setSomeInformation();
 
     return DefaultTabController(
-      length: 2,
+      length: 4,
       child: Scaffold(
 //      appBar: AppBar(centerTitle: true, title: Text(appTitle)),
-      bottomNavigationBar: TabBar(
-          labelColor: Colors.blue,
-          unselectedLabelColor: Colors.blueGrey,
-          labelPadding: EdgeInsets.all(8),
-          tabs: <Widget>[
-        Icon(Icons.home),
-        Icon(Icons.description),
-      ]),
+//      : Text("aaaa"),
+//      drawer: Center(child: Text("AAA"),),
+      bottomNavigationBar: Container(
+        color: Colors.white,
+        child: TabBar(
+            labelColor: Colors.blue,
+            unselectedLabelColor: Colors.blueGrey,
+            labelPadding: EdgeInsets.all(8),
+            tabs: <Widget>[
+          Icon(Icons.home),
+          Icon(Icons.description),
+          Icon(Icons.supervised_user_circle),
+          Icon(Icons.assignment_ind),
+        ]),
+      ),
         body:TabBarView(
           children: <Widget>[
           Column(
@@ -31,6 +38,7 @@ class HomeScreen extends StatelessWidget {
                 flex: 1,
                 child: Container(
                   color: Theme.of(context).accentColor,
+                  child: Center(child: TextInsideTaskCard("HOME                                                  ", size: 25,height: 4,textAlign: TextAlign.left,)),
                 ),
               ),
               Expanded(
@@ -52,19 +60,21 @@ class HomeScreen extends StatelessWidget {
                   flex: 1,
                   child: Container(
                     color: Theme.of(context).accentColor,
+                    child: Center(child: TextInsideTaskCard("TASKS                                                ", size: 25,height: 4,textAlign: TextAlign.left,)),
                   ),
                 ),
                 Expanded(
                   flex: 5,
                   child: ListView(
-                    children: <Widget>[
-                      SectionTitle("TASKS", Colors.blue, icon: Icons.description,)
-                      ]+ListTasks.tasksListView(Controller.getTasks())
+                    children: ListTasks.tasksListView(Controller.getTasks()),
                   )
                 ),
               ],
             ),
-        ],),
+            Center(child: Text("MEMBERS TAB")),
+            Center(child: Text("CLIENTS TAB")),
+          ],
+        ),
 
 
 //      Column(

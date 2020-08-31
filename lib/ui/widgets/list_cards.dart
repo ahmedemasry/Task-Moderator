@@ -21,7 +21,7 @@ class _ListCardsState extends State<ListCards> {
   Widget build(BuildContext context) {
     bool isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
     return SizedBox(
-      height: isPortrait?140:1000,
+      height: isPortrait?120:1000,
       child: ListView.builder(
           scrollDirection:
                 isPortrait

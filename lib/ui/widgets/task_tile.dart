@@ -72,12 +72,24 @@ class TaskTile extends StatelessWidget {
     int minutes = deadline.minute - now.minute;
     bool pm = (deadline.hour>12);
 
-    String hourMinForm = "${pm?deadline.hour-12:deadline.hour}:${deadline.minute} ${pm?"PM":"AM"}";
-
     if (minutes < 0) {
       minutes += 60;
       hours -= 1;
     }
+    if (hours < 0) {
+      hours += 24;
+      days -= 1;
+    }
+    if (days < 0) {
+      days += monthDays(now.month, now.year);
+      months -= 1;
+    }
+    if(months < 0) {
+      months += 12;
+      years -= 1;
+    }
+    String hourMinForm = "${pm?deadline.hour-12:deadline.hour}:${deadline.minute} ${pm?"PM":"AM"}";
+
 
     //If in same month
     if(years == 0 && months == 0){
@@ -106,18 +118,54 @@ class TaskTile extends StatelessWidget {
 
   Color getDeadlineColor(DateTime deadline) {
     DateTime now = DateTime.now();
+
     if(deadline == null) return Colors.blue;
     if(deadline.isBefore(now)) return Colors.pink;
-    if(now.year == deadline.year && now.month == deadline.month){
-      if(now.day == deadline.day) {
-        if(deadline.hour - now.hour <= 1){
+
+    int years = deadline.year - now.year;
+    int months = deadline.month - now.month;
+    int days = deadline.day - now.day;
+    int hours = deadline.hour - now.hour;
+    int minutes = deadline.minute - now.minute;
+    bool pm = (deadline.hour>12);
+
+    if (minutes < 0) {
+      minutes += 60;
+      hours -= 1;
+    }
+    if (hours < 0) {
+      hours += 24;
+      days -= 1;
+    }
+    if (days < 0) {
+      days += monthDays(now.month, now.year);
+      months -= 1;
+    }
+    if(months < 0) {
+      months += 12;
+      years -= 1;
+    }
+
+
+    if(years == 0 && months == 0){
+      if(days == 0) {
+        if(hours <= 1){
           return Colors.deepOrange;
         }
-        else if (deadline.hour - now.hour <= 4){
+        else if (hours <= 4){
           return Colors.orangeAccent;
         }
       }
     }
       return Colors.blue;
+  }
+
+  num monthDays(int month, int year) {
+    if(month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12)
+      return 31;
+    else if(month == 2)
+      return year%4==0 ? 29 : 28;
+    else
+      return 30;
   }
 }
