@@ -53,12 +53,14 @@ class HomeScreen extends StatelessWidget {
   }
 
   List<Widget> screenContent(bool isPortrait) {
-    List<Widget> list = ListTasks.tasksListView(Controller.getTasks());
-    list.insert(0, SectionTitle("USERS", Colors.blue));
-    list.insert(1, ListCards(list: Controller.getUsers(),));
-    list.insert(2, SectionTitle("CLIENTS", Colors.blue));
-    list.insert(3, ListCards(list: Controller.getClients(),));
-    list.insert(4, SectionTitle("TASKS", Colors.blue));
+    List<Widget> tasksList = ListTasks.tasksListView(Controller.getTasks());
+    if(isPortrait){
+      tasksList.insert(0, SectionTitle("USERS", Colors.blue));
+      tasksList.insert(1, ListCards(list: Controller.getUsers(),));
+      tasksList.insert(2, SectionTitle("CLIENTS", Colors.blue));
+      tasksList.insert(3, ListCards(list: Controller.getClients(),));
+      tasksList.insert(4, SectionTitle("TASKS", Colors.blue));
+    }
 
     List<Widget> expandedWidgets=[
       Expanded(
@@ -75,12 +77,13 @@ class HomeScreen extends StatelessWidget {
       ),
       Expanded(
         flex: 3,
-        child: ListTasks(
-          Controller.getTasks(),
+        child: ListView.builder(
+        itemCount: tasksList.length,
+          itemBuilder: (context, index) => tasksList[index],
         ),
       ),
     ];
-    return isPortrait? list: expandedWidgets;
+    return isPortrait? tasksList: expandedWidgets;
   }
 
 }
