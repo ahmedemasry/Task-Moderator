@@ -16,7 +16,7 @@ class HomeScreen extends StatelessWidget {
       body: Column(
         children: <Widget>[
           Expanded(
-            flex: 2,
+            flex: 1,
             child: Container(
               color: Theme.of(context).accentColor,
 //              decoration: BoxDecoration(
@@ -40,13 +40,6 @@ class HomeScreen extends StatelessWidget {
 //                    ],
                   ),
           ),
-          Row(
-            children: <Widget>[
-              Tab(
-                icon: Icon(Icons.account_box),
-              )
-            ],
-          ),
         ],
       ),
     );
@@ -55,18 +48,19 @@ class HomeScreen extends StatelessWidget {
   List<Widget> screenContent(bool isPortrait) {
     List<Widget> tasksList = ListTasks.tasksListView(Controller.getTasks());
     if(isPortrait){
-      tasksList.insert(0, SectionTitle("USERS", Colors.blue));
-      tasksList.insert(1, ListCards(list: Controller.getUsers(),));
-      tasksList.insert(2, SectionTitle("CLIENTS", Colors.blue));
-      tasksList.insert(3, ListCards(list: Controller.getClients(),));
-      tasksList.insert(4, SectionTitle("TASKS", Colors.blue));
+      tasksList.insert(0, SectionTitle("USERS", Colors.blue, icon: Icons.supervised_user_circle,));
+      tasksList.insert(1, Padding(padding: EdgeInsets.all(10),child: ListCards(list: Controller.getUsers(),)));
+      tasksList.insert(2, SectionTitle("CLIENTS", Colors.blue, icon: Icons.assignment_ind,));
+      tasksList.insert(3, Padding(padding: EdgeInsets.all(10), child: ListCards(list: Controller.getClients(),),
+      ));
+      tasksList.insert(4, SectionTitle("TASKS", Colors.blue,icon: Icons.description,));
     }
 
     List<Widget> expandedWidgets=[
       Expanded(
         flex: 2,
         child: ListCards(
-          list: Controller.getUsers(),
+            list: Controller.getUsers(),
         ),
       ),
       Expanded(

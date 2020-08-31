@@ -110,7 +110,7 @@ class TaskTile extends StatelessWidget {
     if(deadline.isBefore(now)) return Colors.pink;
     if(now.year == deadline.year && now.month == deadline.month){
       if(now.day == deadline.day) {
-        if(deadline.hour - now.hour < 1){
+        if(deadline.hour - now.hour <= 1){
           return Colors.deepOrange;
         }
         else if (deadline.hour - now.hour <= 4){
