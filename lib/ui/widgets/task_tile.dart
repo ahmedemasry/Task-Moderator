@@ -46,8 +46,9 @@ class TaskTile extends StatelessWidget {
       title: TextInsideTaskCard(
         title,
         color: task.done ? Colors.green : getDeadlineColor(task.deadline) ,size: TaskTitleSize,
-      ),
-      //Text(title,style: TextStyle(color: task.done?Colors.green:Colors.blue),),
+      ),onTap: (){
+        ShowEditForm(context);//Text(titl
+          },// e,style: TextStyle(color: task.done?Colors.green:Colors.blue),),
       leading: IconButton(padding: EdgeInsets.all(0),iconSize: iconsSize,icon: Icon(task.done?Icons.check_circle:Icons.radio_button_unchecked), color: (task.done)?Colors.green:Colors.blueGrey, onPressed: () {  },),
       trailing: TextInsideTaskCard("$client", color: Colors.blueGrey,),
       subtitle: Column(
@@ -168,4 +169,31 @@ class TaskTile extends StatelessWidget {
     else
       return 30;
   }
+}
+
+void ShowEditForm(context) {
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Stack(
+            clipBehavior: Clip.none, children: <Widget>[
+              Positioned(
+                right: -40.0,
+                top: -40.0,
+                child: InkResponse(
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: CircleAvatar(
+                    child: Icon(Icons.close),
+                    backgroundColor: Colors.blue,
+                  ),
+                ),
+              ),
+            TextField(onTap: (){Navigator.of(context).pop();},)
+            ],
+          ),
+        );
+      });
 }
