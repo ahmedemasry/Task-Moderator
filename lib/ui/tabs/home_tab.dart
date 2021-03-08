@@ -42,6 +42,8 @@ class HomeTab extends StatelessWidget {
       tasksList.insert(4, SectionTitle("TASKS", Colors.blue,icon: Icons.description,));
     }
 
+    if(isPortrait) return tasksList;
+
     List<Widget> expandedWidgets=[
       Expanded(
         flex: 2,
@@ -63,7 +65,7 @@ class HomeTab extends StatelessWidget {
         ),
       ),
     ];
-    return isPortrait? tasksList: expandedWidgets;
+    return expandedWidgets;
   }
 
 }

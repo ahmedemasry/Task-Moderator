@@ -18,7 +18,7 @@ class ClientsTab extends StatelessWidget {
                 .of(context)
                 .accentColor,
             child: Center(child: TextInsideTaskCard(
-              "CLIENTS",
+              "CLIENTS : ${selectedClient.title}",
               size: 25, height: 4, textAlign: TextAlign.left,)),
           ),
         ),
