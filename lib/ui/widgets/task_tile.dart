@@ -8,6 +8,7 @@ import 'package:task_master/model/user.dart';
 import 'package:task_master/utils/constants.dart';
 
 import 'task_card.dart';
+import 'task_edit_form.dart';
 import 'text_widgets.dart';
 
 class TaskTile extends StatelessWidget {
@@ -46,9 +47,7 @@ class TaskTile extends StatelessWidget {
       title: TextInsideTaskCard(
         title,
         color: task.done ? Colors.green : getDeadlineColor(task.deadline) ,size: TaskTitleSize,
-      ),onTap: (){
-        ShowEditForm(context);//Text(titl
-          },// e,style: TextStyle(color: task.done?Colors.green:Colors.blue),),
+      ),// e,style: TextStyle(color: task.done?Colors.green:Colors.blue),),
       leading: IconButton(padding: EdgeInsets.all(0),iconSize: iconsSize,icon: Icon(task.done?Icons.check_circle:Icons.radio_button_unchecked), color: (task.done)?Colors.green:Colors.blueGrey, onPressed: () {  },),
       trailing: TextInsideTaskCard("$client", color: Colors.blueGrey,),
       subtitle: Column(
@@ -60,6 +59,13 @@ class TaskTile extends StatelessWidget {
           Divider(),
         ],
       ),
+      onTap: (){
+        showDialog(
+          context: context,
+          builder: (BuildContext context){
+          return TaskEditDialog(task: task, context: context); //Text(titl
+        },);
+      },
     );
   }
   String dateFormat(DateTime deadline){
@@ -172,12 +178,12 @@ class TaskTile extends StatelessWidget {
 }
 
 void ShowEditForm(context) {
-  showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          content: Stack(
-            clipBehavior: Clip.none, children: <Widget>[
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            content: Stack(
+              clipBehavior: Clip.none, children: <Widget>[
               Positioned(
                 right: -40.0,
                 top: -40.0,
@@ -191,9 +197,14 @@ void ShowEditForm(context) {
                   ),
                 ),
               ),
-            TextField(onTap: (){Navigator.of(context).pop();},)
+              Form(
+                  child: Column(children: [
+                    Text("data"),
+                  ],)
+              ),
+              TextField(onTap: (){Navigator.of(context).pop();},)
             ],
-          ),
-        );
-      });
+            ),
+          );
+        });
 }

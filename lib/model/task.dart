@@ -4,9 +4,12 @@ import 'package:task_master/model/user.dart';
 import 'client.dart';
 
 class Task implements Comparable<Task>{
-  final String _title;
+  String _title;
   DateTime _deadline;
-  final Client _client;
+  Client _client;
+
+
+
   String _description;
   bool _done = false;
   User _user;
@@ -18,11 +21,17 @@ class Task implements Comparable<Task>{
     return _title;
   }
   String get title => _title;
+  set title(String value){
+    _title = value;
+  }
   DateTime get deadline => _deadline;
   set deadline(DateTime value) {
     _deadline = value;
   }
   Client get client => _client;
+  set client(Client value) {
+    _client = value;
+  }
   String get description => _description;
   set description(String value) {
     _description = value;
