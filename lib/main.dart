@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:task_master/bloc/counter_bloc.dart';
+import 'package:task_master/ui/screens/intro_screen.dart';
 import 'ui/screens/home_screen.dart';
 import 'utils/app_theme.dart';
 
