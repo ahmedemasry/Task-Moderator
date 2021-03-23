@@ -3,9 +3,8 @@ import 'package:task_master/model/task.dart';
 
 class TaskEditDialog extends StatefulWidget {
   final Task task;
-  final context;
 
-  const TaskEditDialog({Key key, this.task, this.context}) : super(key: key);
+  const TaskEditDialog({Key key, this.task,}) : super(key: key);
   @override
   _TaskEditDialogState createState() => _TaskEditDialogState();
 }
@@ -21,6 +20,7 @@ class _TaskEditDialogState extends State<TaskEditDialog> {
     title.text = widget.task.title;
     description.text = widget.task.description;
     return AlertDialog(
+      title: Text(widget.task.title),
       content: Stack(
         clipBehavior: Clip.none, children: <Widget>[
         Positioned(
@@ -49,10 +49,10 @@ class _TaskEditDialogState extends State<TaskEditDialog> {
               ),
               TextButton(
                 onPressed: () {
+                  //Navigator.of(context).pop();
                   setState(() {
                     widget.task.title = title.text;
                   });
-                  Navigator.of(context).pop();
                 },
                 child: Text("Change"),
               ),

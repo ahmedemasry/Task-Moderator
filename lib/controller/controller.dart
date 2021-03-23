@@ -47,14 +47,16 @@ class Controller{
 
     print("TASKS:  ${getClientTasks(fabulous)}");
 
-    _users= [yousef, ahmed, moustafa];
+    getUsers().add(yousef);
+    getUsers().add(ahmed);
+    getUsers().add(moustafa);
 
     _clients = [fabulous, genZ, ahmedFarouk];
   }
 
   static List<Task> getTasks(){
     List<Task> _tasks = List<Task>();
-    for(User user in _users){
+    for(User user in getUsers()){
       for(Task task in user.tasks){
         _tasks.add(task);
       }
@@ -64,7 +66,7 @@ class Controller{
   }
   static Map<User, List<Task>> getUserTasksMap(){
     Map<User, List<Task>> map = Map<User, List<Task>>();
-    for(User user in _users){
+    for(User user in getUsers()){
       List<Task> _tasks = List<Task>();
       for(Task task in user.tasks){
         _tasks.add(task);
@@ -75,7 +77,7 @@ class Controller{
   }
   static List<Task> getClientTasks(Client client){
     List<Task> _tasks = List<Task>();
-    for(User user in _users){
+    for(User user in getUsers()){
       for(Task task in user.tasks){
         if(task.client == client){
         _tasks.add(task);
@@ -86,7 +88,7 @@ class Controller{
   }
   static Map<User, List<Task>> getClientUserTasksMap(Client client){
     Map<User, List<Task>> map = Map<User, List<Task>>();
-    for(User user in _users){
+    for(User user in getUsers()){
       List<Task> _tasks = List<Task>();
       for(Task task in user.tasks){
         if(task.client == client){
@@ -97,9 +99,30 @@ class Controller{
     }
     return map;
   }
+  static User getUserWithUID(String uid){
+    List<User> users = getUsers();
+    for(User user in  users){
+      if(user.uid == uid){
+        return user;
+      }
+    }
+    return null;
+  }
+  static Client getClientWithTitle(String title){
+    List<Client> clients = getClients();
+    for(Client client in  clients){
+      if(client.title == title){
+        return client;
+      }
+    }
+    return null;
+  }
   static List<User> getUsers() {
     //TODO
     //Get Users from firebase
+    if( _users != null)
+      return _users;
+    _users = new List<User>();
     return _users;
   }
   static List<Client> getClients() {

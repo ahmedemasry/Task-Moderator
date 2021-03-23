@@ -5,14 +5,15 @@ import 'package:task_master/controller/controller.dart';
 import 'package:task_master/model/client.dart';
 import 'package:task_master/model/task.dart';
 import 'package:task_master/model/user.dart';
+import 'package:task_master/ui/screens/edit_screen.dart';
 import 'package:task_master/utils/constants.dart';
 
 import 'task_card.dart';
 import 'task_edit_form.dart';
 import 'text_widgets.dart';
 
-class TaskTile extends StatelessWidget {
-  final String title;
+class TaskTile extends StatefulWidget {
+  String title;
   final String client;
   final String description;
   final remainingTasks;
@@ -40,34 +41,47 @@ class TaskTile extends StatelessWidget {
             task: task,
             showUserName: showUserName ?? false);
 
+  @override
+  _TaskTileState createState() => _TaskTileState();
+}
+
+class _TaskTileState extends State<TaskTile> {
   Widget build(BuildContext context) {
     return ListTile(
 //        margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
 //        color: Colors.green,
       title: TextInsideTaskCard(
-        title,
-        color: task.done ? Colors.green : getDeadlineColor(task.deadline) ,size: TaskTitleSize,
+        widget.title,
+        color: widget.task.done ? Colors.green : getDeadlineColor(widget.task.deadline) ,size: TaskTitleSize,
       ),// e,style: TextStyle(color: task.done?Colors.green:Colors.blue),),
-      leading: IconButton(padding: EdgeInsets.all(0),iconSize: iconsSize,icon: Icon(task.done?Icons.check_circle:Icons.radio_button_unchecked), color: (task.done)?Colors.green:Colors.blueGrey, onPressed: () {  },),
-      trailing: TextInsideTaskCard("$client", color: Colors.blueGrey,),
+      leading: IconButton(padding: EdgeInsets.all(0),iconSize: iconsSize,icon: Icon(widget.task.done?Icons.check_circle:Icons.radio_button_unchecked), color: (widget.task.done)?Colors.green:Colors.blueGrey, onPressed: () {  },),
+      trailing: TextInsideTaskCard("${widget.client}", color: Colors.blueGrey,),
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          TextInsideTaskCard("${showUserName?"${task.user.name} | ":""}${dateFormat(task.deadline)}", color: Color(0xFF364E68),height: 1.5,),
+          TextInsideTaskCard("${widget.showUserName?"${widget.task.user.name} | ":""}${dateFormat(widget.task.deadline)}", color: Color(0xFF364E68),height: 1.5,),
           SizedBox(height: 5,),
-          TextInsideTaskCard("${description.length<50?description:"${description.substring(0,45)}..."}", color: Colors.blueGrey,),
+          TextInsideTaskCard("${widget.description.length<50?widget.description:"${widget.description.substring(0,45)}..."}", color: Colors.blueGrey,),
           Divider(),
         ],
       ),
-      onTap: (){
-        showDialog(
-          context: context,
-          builder: (BuildContext context){
-          return TaskEditDialog(task: task, context: context); //Text(titl
-        },);
+      onTap: () async {
+        // Navigator.pop on the Selection Screen.
+        Navigator.push(context, MaterialPageRoute(builder: (context) => EditScreen(task: widget.task,)),).then((value) => setState(() {}));
+        // After the Selection Screen returns a result, hide any previous snackbars
+        // and show the new result.
+
+
+      //   showDialog(
+      //     context: context,
+      //     builder: (BuildContext context){
+      //       return TaskEditDialog(task: widget.task);
+      //     },
+      //   );//.then((value){ setState((){ }); });
       },
     );
   }
+
   String dateFormat(DateTime deadline){
     DateTime now = DateTime.now();
     if(deadline == null)
@@ -118,7 +132,7 @@ class TaskTile extends StatelessWidget {
     String d = deadline.day.toString();
     String m = deadline.month.toString();
     String h = "${deadline.hour}:${deadline.minute}";
-    if(now.isAfter(deadline) && !task.done)
+    if(now.isAfter(deadline) && !widget.task.done)
       return "$d/$m$y, $hourMinForm PASSED !";
     return "$d/$m$y, $hourMinForm";
   }
@@ -175,36 +189,4 @@ class TaskTile extends StatelessWidget {
     else
       return 30;
   }
-}
-
-void ShowEditForm(context) {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            content: Stack(
-              clipBehavior: Clip.none, children: <Widget>[
-              Positioned(
-                right: -40.0,
-                top: -40.0,
-                child: InkResponse(
-                  onTap: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: CircleAvatar(
-                    child: Icon(Icons.close),
-                    backgroundColor: Colors.blue,
-                  ),
-                ),
-              ),
-              Form(
-                  child: Column(children: [
-                    Text("data"),
-                  ],)
-              ),
-              TextField(onTap: (){Navigator.of(context).pop();},)
-            ],
-            ),
-          );
-        });
 }
