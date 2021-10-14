@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:task_master/model/task.dart';
 
 class TaskEditDialog extends StatefulWidget {
-  final Task task;
+  final Task? task;
 
-  const TaskEditDialog({Key key, this.task,}) : super(key: key);
+  const TaskEditDialog({Key? key, this.task,}) : super(key: key);
   @override
   _TaskEditDialogState createState() => _TaskEditDialogState();
 }
@@ -17,10 +17,10 @@ class _TaskEditDialogState extends State<TaskEditDialog> {
 
   @override
   Widget build(BuildContext context) {
-    title.text = widget.task.title;
-    description.text = widget.task.description;
+    title.text = widget.task!.title;
+    description.text = widget.task!.description;
     return AlertDialog(
-      title: Text(widget.task.title),
+      title: Text(widget.task!.title),
       content: Stack(
         clipBehavior: Clip.none, children: <Widget>[
         Positioned(
@@ -43,7 +43,7 @@ class _TaskEditDialogState extends State<TaskEditDialog> {
             child: Column(children: [
               TextFormField(
                 controller: title,
-                validator: (value) => value.isEmpty?'You Must Enter Title':null,
+                validator: (value) => value!.isEmpty?'You Must Enter Title':null,
                 decoration: InputDecoration(hintText: 'Task Title'),
 //                onChanged: (value) => widget.task.title = title.text,
               ),
@@ -51,7 +51,7 @@ class _TaskEditDialogState extends State<TaskEditDialog> {
                 onPressed: () {
                   //Navigator.of(context).pop();
                   setState(() {
-                    widget.task.title = title.text;
+                    widget.task!.title = title.text;
                   });
                 },
                 child: Text("Change"),

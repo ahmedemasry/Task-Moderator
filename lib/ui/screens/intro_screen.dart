@@ -12,24 +12,32 @@ class IntroScreen extends StatelessWidget {
         child: Form(
           key: _formKey,
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            // crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               TextFormField(
+                onFieldSubmitted: (_) => submit(context),
+                autofocus: true,
+                keyboardType: TextInputType.emailAddress,
                 validator: (value) {
-                  if (!value.contains("@") || !value.contains(".")) {
+                  if (!value!.contains("@") || !value.contains(".")) {
                     return 'Please Enter a Valid Email';
                   }
                   return null;
                 },
               ),
-              ElevatedButton(onPressed: () {
-                if (_formKey.currentState.validate()) {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
-                }
-              }, child: Text('Submit')),
+              ElevatedButton(onPressed: () => submit(context)
+                  , child: Text('Submit')),
             ],
           ),
         ),
       ),
     );
+  }
+
+  submit(context){
+    if (_formKey.currentState!.validate()) {
+      Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+    }
   }
 }

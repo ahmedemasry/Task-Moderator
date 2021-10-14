@@ -3,21 +3,20 @@ import 'package:task_master/controller/controller.dart';
 import 'task.dart';
 
 class User {
-  final String _name;
+  String _name;
   String _subtitle;
-  final User _leader; ////
-  List<User> _members; ////
+  User? _leader; ////
+  List<User> _members = []; ////
   final String _uid;
-  List<Task> _tasks;
+  List<Task> _tasks = [];
 
 
-  User({name, subtitle, leader, uid, tasks, }) : this._name = name, this._subtitle = subtitle, this._leader = leader, this._uid = uid, this._tasks=tasks;
+  User({required name, subtitle, leader, required uid}) : this._name = name, this._subtitle = subtitle??'', this._leader = leader, this._uid = uid;
 
 
 
-  addTask(Task newTask){
-    tasks.add(newTask);
-    newTask.user = this;
+  addTask({required title, client, deadline, done, description}){
+    Task t = Task(title: title, user: this, client: client, deadline: deadline, done: done, description: description);
   }
 
   addMember(User newMember){
@@ -39,19 +38,15 @@ class User {
   }
 
   List<User> get members {
-    if(_members == null)
-      _members = List<User>();
     return _members;
   }
   String get uid => _uid;
   List<Task> get tasks {
-    if(_tasks == null)
-      _tasks = List<Task>();
     return _tasks;
   }
   get name => _name;
-  get subtitle => _subtitle;
-  User get leader => _leader;
+  String get subtitle => _subtitle;
+  User? get leader => _leader;
   set subtitle(String value) {
     _subtitle = value;
   }
@@ -63,20 +58,17 @@ class User {
       subtitle: json["subtitle"],
       leader: Controller.getUserWithUID(json["leader"]),
       uid: json["uid"],
-      tasks: List<Task>.from(json["tasks"].map((x) => Task.fromJson(x))),
     );
-    for(Task task in user.tasks) {
-      task.user = user;
-    }
+    user._tasks = List<Task>.from(json["tasks"].map((x) => Task.fromJson(x, user)));
     if(user.leader != null)
-      user.leader.addMember(user);
+      user.leader!.addMember(user);
     return user;
   }
 
   Map<String, dynamic> toJson() => {
     "name": name,
     "subtitle": subtitle,
-    "leader": leader == null ? null : leader.uid,
+    "leader": leader == null ? null : leader!.uid,
     "uid": uid,
     "tasks": List<dynamic>.from(tasks.map((x) => x.toJson())),
   };

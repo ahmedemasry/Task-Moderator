@@ -8,16 +8,21 @@ import 'client.dart';
 class Task implements Comparable<Task>{
   //Tasks are stored inside
   String _title;
-  DateTime _deadline;
-  Client _client;   ////
+  DateTime? _deadline;
+  Client? _client;   ////
 
 
 
   String _description;
   bool _done = false;
-  User _user;
+  final User _user;
 
-  Task({title, client, deadline, done, description}) : _title = title, _client = client, _deadline = deadline, _done = done, _description = description;
+  Task({required title, client, deadline, done, description, required user}) :
+        _user=user, _title = title, _client = client, _deadline = deadline, _done = done==null?false:done, _description = description??''
+  {
+   _user.tasks.add(this);
+  }
+  
 
   String toString() {
     // TODO: implement toString
@@ -27,12 +32,12 @@ class Task implements Comparable<Task>{
   set title(String value){
     _title = value;
   }
-  DateTime get deadline => _deadline;
-  set deadline(DateTime value) {
+  DateTime? get deadline => _deadline;
+  set deadline(DateTime? value) {
     _deadline = value;
   }
-  Client get client => _client;
-  set client(Client value) {
+  Client? get client => _client;
+  set client(Client? value) {
     _client = value;
   }
   String get description => _description;
@@ -44,34 +49,34 @@ class Task implements Comparable<Task>{
     _done = value;
   }
   User get user => _user;
-  set user(User value) {
-    _user = value;
-  }
+  // set user(User value) {
+  //   _user = value;
+  // }
 
   @override
   int compareTo(Task other) {
     // TODO: implement compareTo
     if(this.deadline == null) return 1;
     if(other.deadline == null) return -1;
-    if(this.deadline.isAfter(other.deadline)) return 1;
-    if(this.deadline.isBefore(other.deadline)) return -1;
+    if(this.deadline!.isAfter(other.deadline!)) return 1;
+    if(this.deadline!.isBefore(other.deadline!)) return -1;
     return 0;
   }
 
 
-  factory Task.fromJson(Map<String, dynamic> json) => Task(
+  factory Task.fromJson(Map<String, dynamic> json, User user) => Task(
       title: json["title"],
       deadline: json["deadline"] == null ? null : DateTime.parse(
           json["deadline"]),
       client: Controller.getClientWithTitle(json["client"]),
       description: json["description"] == null ? null : json["description"],
-      done: json["done"],
+      done: json["done"], user: user,
     );
 
   Map<String, dynamic> toJson() => {
     "title": title,
-    "deadline": deadline == null ? null : deadline.toIso8601String(),
-    "client": client.title,
+    "deadline": deadline == null ? null : deadline!.toIso8601String(),
+    "client": client!.title,
     "description": description == null ? null : description,
     "done": done,
   };

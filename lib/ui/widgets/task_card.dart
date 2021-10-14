@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
-import 'package:task_master/controller/controller.dart';
 import 'package:task_master/model/client.dart';
 import 'package:task_master/model/task.dart';
 import 'package:task_master/model/user.dart';
@@ -11,17 +10,17 @@ import 'package:task_master/ui/widgets/text_widgets.dart';
 import 'package:task_master/utils/constants.dart';
 
 class TaskCard extends StatelessWidget {
-  final String title;
-  final String subtitle;
+  final String? title;
+  final String? subtitle;
   final remainingTasks;
   final doneTasks;
-  final Object object;
+  final Object? object;
   final bool showUserName;
 
 
-  TaskCard({Key key,
-    @required this.title,
-    @required this.subtitle,
+  TaskCard({Key? key,
+    required this.title,
+    required this.subtitle,
     this.remainingTasks = 0,
     this.doneTasks = 0,
     this.object,
@@ -30,7 +29,7 @@ class TaskCard extends StatelessWidget {
 
   @override
   TaskCard.withTask(Task task, {showUserName}) :this(title: task.title,
-      subtitle: task.client.title,
+      subtitle: task.client!.title,
       object: task,
       showUserName: showUserName ?? false);
 
@@ -84,11 +83,11 @@ class TaskCard extends StatelessWidget {
         doneTasks == null ||
         remainingTasks + doneTasks == 0) {
       if (object is Task) {
-        Task task = object;
+        Task task = object as Task;
         return Column(
           children: <Widget>[
             showUserName ? TextInsideTaskCard(task.user.name, color: Colors.white, height:2) : Container(),
-            IconButton(icon: Icon(task.done ? Icons.done : Icons.crop_3_2), iconSize: 40, disabledColor: Colors.white,)
+            IconButton(icon: Icon(task.done ? Icons.done : Icons.crop_3_2), iconSize: 40, disabledColor: Colors.white, onPressed: () {  },)
           ],
         );
       }

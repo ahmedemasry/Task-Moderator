@@ -1,11 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:task_master/controller/controller.dart';
-import 'package:task_master/model/client.dart';
 import 'package:task_master/model/task.dart';
-import 'package:task_master/model/user.dart';
 import 'package:task_master/ui/screens/edit_screen.dart';
+import 'package:task_master/ui/screens/home_screen.dart';
 import 'package:task_master/utils/constants.dart';
 
 import 'task_card.dart';
@@ -14,17 +12,17 @@ import 'text_widgets.dart';
 
 class TaskTile extends StatefulWidget {
   String title;
-  final String client;
+  final String? client;
   final String description;
   final remainingTasks;
   final doneTasks;
-  final Task task;
+  final Task? task;
   final bool showUserName;
 
   TaskTile({
-    Key key,
-    @required this.title,
-    @required this.client,
+    Key? key,
+    required this.title,
+    required this.client,
     this.description = "",
     this.remainingTasks = 0,
     this.doneTasks = 0,
@@ -36,10 +34,11 @@ class TaskTile extends StatefulWidget {
   TaskTile.withTask(Task task, {showUserName})
       : this(
             title: task.title,
-            description: task.description ?? "Lorem Ipsum is simply dummy text of the printing text.",
-            client: task.client.title,
+            description: task.description ,//??"Lorem Ipsum is simply dummy text of the printing text.",
+            client: task.client!.title,
             task: task,
-            showUserName: showUserName ?? false);
+            showUserName: showUserName ?? false,
+  );
 
   @override
   _TaskTileState createState() => _TaskTileState();
@@ -52,14 +51,21 @@ class _TaskTileState extends State<TaskTile> {
 //        color: Colors.green,
       title: TextInsideTaskCard(
         widget.title,
-        color: widget.task.done ? Colors.green : getDeadlineColor(widget.task.deadline) ,size: TaskTitleSize,
+        color: widget.task!.done ? Colors.green : getDeadlineColor(widget.task!.deadline) ,size: TaskTitleSize,
       ),// e,style: TextStyle(color: task.done?Colors.green:Colors.blue),),
-      leading: IconButton(padding: EdgeInsets.all(0),iconSize: iconsSize,icon: Icon(widget.task.done?Icons.check_circle:Icons.radio_button_unchecked), color: (widget.task.done)?Colors.green:Colors.blueGrey, onPressed: () {  },),
+      leading: IconButton(padding: EdgeInsets.all(0),iconSize: iconsSize,
+        icon: Icon(widget.task!.done?Icons.check_circle:Icons.radio_button_unchecked),
+        color: (widget.task!.done)?Colors.green:Colors.blueGrey,
+        onPressed: () {
+        setState(() {
+          widget.task!.done = !widget.task!.done;
+        });
+        },),
       trailing: TextInsideTaskCard("${widget.client}", color: Colors.blueGrey,),
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          TextInsideTaskCard("${widget.showUserName?"${widget.task.user.name} | ":""}${dateFormat(widget.task.deadline)}", color: Color(0xFF364E68),height: 1.5,),
+          TextInsideTaskCard("${widget.showUserName?"${widget.task!.user.name} | ":""}${dateFormat(widget.task!.deadline)}", color: Color(0xFF364E68),height: 1.5,),
           SizedBox(height: 5,),
           TextInsideTaskCard("${widget.description.length<50?widget.description:"${widget.description.substring(0,45)}..."}", color: Colors.blueGrey,),
           Divider(),
@@ -82,7 +88,7 @@ class _TaskTileState extends State<TaskTile> {
     );
   }
 
-  String dateFormat(DateTime deadline){
+  String dateFormat(DateTime? deadline){
     DateTime now = DateTime.now();
     if(deadline == null)
       return "no deadline";
@@ -102,7 +108,7 @@ class _TaskTileState extends State<TaskTile> {
       days -= 1;
     }
     if (days < 0) {
-      days += monthDays(now.month, now.year);
+      days += monthDays(now.month, now.year) as int;
       months -= 1;
     }
     if(months < 0) {
@@ -132,12 +138,12 @@ class _TaskTileState extends State<TaskTile> {
     String d = deadline.day.toString();
     String m = deadline.month.toString();
     String h = "${deadline.hour}:${deadline.minute}";
-    if(now.isAfter(deadline) && !widget.task.done)
+    if(now.isAfter(deadline) && !widget.task!.done)
       return "$d/$m$y, $hourMinForm PASSED !";
     return "$d/$m$y, $hourMinForm";
   }
 
-  Color getDeadlineColor(DateTime deadline) {
+  Color getDeadlineColor(DateTime? deadline) {
     DateTime now = DateTime.now();
 
     if(deadline == null) return Colors.blue;
@@ -159,7 +165,7 @@ class _TaskTileState extends State<TaskTile> {
       days -= 1;
     }
     if (days < 0) {
-      days += monthDays(now.month, now.year);
+      days += monthDays(now.month, now.year) as int;
       months -= 1;
     }
     if(months < 0) {

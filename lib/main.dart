@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: BlocProvider<CounterBloc>(
         create: (context) => CounterBloc(0),
-        child: HomeScreen(),
+        child: IntroScreen(),
       ),
     );
   }

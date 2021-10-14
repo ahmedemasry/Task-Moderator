@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:task_master/controller/controller.dart';
 import 'package:task_master/model/task.dart';
 
 import 'task_tile.dart';
@@ -9,13 +8,13 @@ import 'text_widgets.dart';
 
 class ListTasks extends StatefulWidget {
   final List<Task> tasks;
-  final bool showUserName;
+  final bool? showUserName;
 
 
-  const ListTasks(this.tasks, {Key key, this.showUserName}) : super(key: key);
+  const ListTasks(this.tasks, {Key? key, this.showUserName}) : super(key: key);
 
-  static List<Widget> tasksListsTiles(List<Task> tasks, {bool showUserName, bool doneTasksOnly}){
-    List<Widget> tiles = List<Widget>();
+  static List<Widget> tasksListsTiles(List<Task> tasks, {bool? showUserName, bool? doneTasksOnly}){
+    List<Widget> tiles = [];
     for(Task task in tasks){
       if(doneTasksOnly==null || task.done == doneTasksOnly)
         tiles.add(TaskTile.withTask(task, showUserName: showUserName??false));
@@ -23,9 +22,9 @@ class ListTasks extends StatefulWidget {
     return tiles;
   }
 
-  static List<Widget> tasksListView(List<Task> tasks, {bool showUserName}){
-    List<Widget> remainingList = List<Widget>();
-    List<Widget> doneList = List<Widget>();
+  static List<Widget> tasksListView(List<Task> tasks, {bool? showUserName}){
+    List<Widget> remainingList = [];
+    List<Widget> doneList = [];
     for(Task task in tasks){
       if(task.done)
         doneList.add(TaskTile.withTask(task, showUserName: showUserName??false));

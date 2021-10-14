@@ -18,9 +18,9 @@ class TextWidgets {
 class SectionTitle extends StatelessWidget {
   final String title;
   final MaterialColor color;
-  final IconData icon;
+  final IconData? icon;
 
-  const SectionTitle(this.title, this.color, {Key key, this.icon}) : super(key: key);
+  const SectionTitle(this.title, this.color, {Key? key, this.icon}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -39,7 +39,7 @@ class SubSectionTitle extends StatelessWidget {
   final String title;
   final MaterialColor color;
 
-  const SubSectionTitle(this.title, this.color, {Key key}) : super(key: key);
+  const SubSectionTitle(this.title, this.color, {Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -50,7 +50,7 @@ class SubSectionTitle extends StatelessWidget {
 
 
 class TextInsideTaskCard extends StatelessWidget {
-  final String text;
+  final String? text;
   final Color color;
   final double size;
   final double height;
@@ -63,7 +63,7 @@ class TextInsideTaskCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      text,
+      text!,
       textAlign: textAlign,
       style: TextStyle(color: color, fontSize: size, height: height),
     );
